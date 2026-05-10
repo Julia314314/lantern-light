@@ -77,10 +77,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "description", content: "拾光書語：以教育傳承文化，以科技連結偏鄉。一位高中生的應華組學習歷程網站。" },
       { name: "author", content: "拾光書語" },
       { property: "og:title", content: "拾光書語 — 在教育與文化之間" },
-      { property: "og:description", content: "點亮偏鄉教育與華語文化傳承。" },
+      { property: "og:description", content: "拾光書語：以教育傳承文化，以科技連結偏鄉。一位高中生的應華組學習歷程網站。" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "拾光書語 — 在教育與文化之間" },
+      { name: "twitter:description", content: "拾光書語：以教育傳承文化，以科技連結偏鄉。一位高中生的應華組學習歷程網站。" },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b74f98f6-9083-4dd8-a788-8cc43c83f1e8/id-preview-c0cd064c--870fd9a0-883e-42b8-b0a4-25e40db6abf9.lovable.app-1778427858419.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b74f98f6-9083-4dd8-a788-8cc43c83f1e8/id-preview-c0cd064c--870fd9a0-883e-42b8-b0a4-25e40db6abf9.lovable.app-1778427858419.png" },
     ],
     links: [
       {
