@@ -12,4 +12,8 @@ export default defineConfig({
   tanstackStart: {
     server: { entry: "server" },
   },
+  // 這裡就是關鍵：加入 GitHub Pages 的儲存庫名稱路徑
+  vite: {
+    base: "/lantern-light/",
+  },
 });
