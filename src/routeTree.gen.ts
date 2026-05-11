@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as LiteratureRouteImport } from './routes/literature'
 import { Route as CultureRouteImport } from './routes/culture'
+import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -22,6 +23,11 @@ const LiteratureRoute = LiteratureRouteImport.update({
 const CultureRoute = CultureRouteImport.update({
   id: '/culture',
   path: '/culture',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesRoute = ActivitiesRouteImport.update({
+  id: '/activities',
+  path: '/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AboutRoute = AboutRouteImport.update({
@@ -38,12 +44,14 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
 }
@@ -51,20 +59,22 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/culture' | '/literature'
+  fullPaths: '/' | '/about' | '/activities' | '/culture' | '/literature'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/culture' | '/literature'
-  id: '__root__' | '/' | '/about' | '/culture' | '/literature'
+  to: '/' | '/about' | '/activities' | '/culture' | '/literature'
+  id: '__root__' | '/' | '/about' | '/activities' | '/culture' | '/literature'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ActivitiesRoute: typeof ActivitiesRoute
   CultureRoute: typeof CultureRoute
   LiteratureRoute: typeof LiteratureRoute
 }
@@ -83,6 +93,13 @@ declare module '@tanstack/react-router' {
       path: '/culture'
       fullPath: '/culture'
       preLoaderRoute: typeof CultureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities': {
+      id: '/activities'
+      path: '/activities'
+      fullPath: '/activities'
+      preLoaderRoute: typeof ActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -105,6 +122,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ActivitiesRoute: ActivitiesRoute,
   CultureRoute: CultureRoute,
   LiteratureRoute: LiteratureRoute,
 }
