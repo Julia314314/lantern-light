@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PortfolioRouteImport } from './routes/portfolio'
 import { Route as LiteratureRouteImport } from './routes/literature'
 import { Route as CultureRouteImport } from './routes/culture'
 import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const PortfolioRoute = PortfolioRouteImport.update({
+  id: '/portfolio',
+  path: '/portfolio',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LiteratureRoute = LiteratureRouteImport.update({
   id: '/literature',
   path: '/literature',
@@ -47,6 +53,7 @@ export interface FileRoutesByFullPath {
   '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +61,7 @@ export interface FileRoutesByTo {
   '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,13 +70,27 @@ export interface FileRoutesById {
   '/activities': typeof ActivitiesRoute
   '/culture': typeof CultureRoute
   '/literature': typeof LiteratureRoute
+  '/portfolio': typeof PortfolioRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/activities' | '/culture' | '/literature'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/activities'
+    | '/culture'
+    | '/literature'
+    | '/portfolio'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/activities' | '/culture' | '/literature'
-  id: '__root__' | '/' | '/about' | '/activities' | '/culture' | '/literature'
+  to: '/' | '/about' | '/activities' | '/culture' | '/literature' | '/portfolio'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/activities'
+    | '/culture'
+    | '/literature'
+    | '/portfolio'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -77,10 +99,18 @@ export interface RootRouteChildren {
   ActivitiesRoute: typeof ActivitiesRoute
   CultureRoute: typeof CultureRoute
   LiteratureRoute: typeof LiteratureRoute
+  PortfolioRoute: typeof PortfolioRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/portfolio': {
+      id: '/portfolio'
+      path: '/portfolio'
+      fullPath: '/portfolio'
+      preLoaderRoute: typeof PortfolioRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/literature': {
       id: '/literature'
       path: '/literature'
@@ -125,6 +155,7 @@ const rootRouteChildren: RootRouteChildren = {
   ActivitiesRoute: ActivitiesRoute,
   CultureRoute: CultureRoute,
   LiteratureRoute: LiteratureRoute,
+  PortfolioRoute: PortfolioRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
