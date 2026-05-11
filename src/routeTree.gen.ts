@@ -9,10 +9,16 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as LiteratureRouteImport } from './routes/literature'
 import { Route as CultureRouteImport } from './routes/culture'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 
+const LiteratureRoute = LiteratureRouteImport.update({
+  id: '/literature',
+  path: '/literature',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CultureRoute = CultureRouteImport.update({
   id: '/culture',
   path: '/culture',
@@ -33,34 +39,45 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/culture': typeof CultureRoute
+  '/literature': typeof LiteratureRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/culture': typeof CultureRoute
+  '/literature': typeof LiteratureRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/culture': typeof CultureRoute
+  '/literature': typeof LiteratureRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/culture'
+  fullPaths: '/' | '/about' | '/culture' | '/literature'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/culture'
-  id: '__root__' | '/' | '/about' | '/culture'
+  to: '/' | '/about' | '/culture' | '/literature'
+  id: '__root__' | '/' | '/about' | '/culture' | '/literature'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   CultureRoute: typeof CultureRoute
+  LiteratureRoute: typeof LiteratureRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/literature': {
+      id: '/literature'
+      path: '/literature'
+      fullPath: '/literature'
+      preLoaderRoute: typeof LiteratureRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/culture': {
       id: '/culture'
       path: '/culture'
@@ -89,7 +106,18 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   CultureRoute: CultureRoute,
+  LiteratureRoute: LiteratureRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
